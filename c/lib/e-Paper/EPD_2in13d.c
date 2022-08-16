@@ -174,7 +174,7 @@ static void EPD_2IN13D_Reset(void)
     DEV_Digital_Write(EPD_RST_PIN, 1);
     DEV_Delay_ms(200);
     DEV_Digital_Write(EPD_RST_PIN, 0);
-    DEV_Delay_ms(2);
+    DEV_Delay_ms(200);
     DEV_Digital_Write(EPD_RST_PIN, 1);
     DEV_Delay_ms(200);
 }
@@ -303,7 +303,7 @@ parameter:
 static void EPD_2IN13D_TurnOnDisplay(void)
 {
     EPD_2IN13D_SendCommand(0x12);		 //DISPLAY REFRESH
-    DEV_Delay_ms(100);     //!!!The delay here is necessary, 200uS at least!!!
+    DEV_Delay_ms(10);     //!!!The delay here is necessary, 200uS at least!!!
 
     EPD_2IN13D_ReadBusy();
 }
@@ -367,7 +367,7 @@ void EPD_2IN13D_Clear(void)
     EPD_2IN13D_SendCommand(0x13);
     for (UWORD j = 0; j < Height; j++) {
         for (UWORD i = 0; i < Width; i++) {
-            EPD_2IN13D_SendData(0xff);
+            EPD_2IN13D_SendData(0xFF);
         }
     }
 
@@ -401,7 +401,7 @@ void EPD_2IN13D_Display(UBYTE *Image)
     }
     // Dev_Delay_ms(10);
 
-	EPD_2IN13D_SetFullReg();
+		EPD_2IN13D_SetFullReg();
     EPD_2IN13D_TurnOnDisplay();
 }
 
@@ -412,7 +412,7 @@ parameter:
 void EPD_2IN13D_DisplayPart(UBYTE *Image)
 {
     /* Set partial Windows */
-
+    EPD_2IN13D_SetPartReg();
     EPD_2IN13D_SendCommand(0x91);		//This command makes the display enter partial mode
     EPD_2IN13D_SendCommand(0x90);		//resolution setting
     EPD_2IN13D_SendData(0);           //x-start
@@ -441,7 +441,7 @@ void EPD_2IN13D_DisplayPart(UBYTE *Image)
             EPD_2IN13D_SendData(Image[i + j * Width]);
         }
     }
-    EPD_2IN13D_SetPartReg();
+
     /* Set partial refresh */    
     EPD_2IN13D_TurnOnDisplay();
 }

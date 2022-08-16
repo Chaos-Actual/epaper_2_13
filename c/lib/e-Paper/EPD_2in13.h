@@ -1,12 +1,33 @@
 /*****************************************************************************
-* | File      	:   ImageData.h
+* | File      	:   EPD_2IN13.h
 * | Author      :   Waveshare team
-* | Function    :	
-*----------------
-* |	This version:   V1.0
-* | Date        :   2018-10-23
+* | Function    :   2.13inch e-paper
 * | Info        :
-*
+*----------------
+* |	This version:   V3.0
+* | Date        :   2019-06-12
+* | Info        :
+* -----------------------------------------------------------------------------
+* V3.0(2019-06-12):
+* 1.Change:
+*    EPD_Reset() => EPD_2IN13_Reset()
+*    EPD_SendCommand() => EPD_2IN13_SendCommand()
+*    EPD_SendData() => EPD_2IN13_SendData()
+*    EPD_WaitUntilIdle() => EPD_2IN13_ReadBusy()
+*    EPD_Init() => EPD_2IN13_Init()
+*    EPD_Clear() => EPD_2IN13_Clear()
+*    EPD_Display() => EPD_2IN13_Display()
+*    EPD_Sleep() => EPD_2IN13_Sleep()
+* -----------------------------------------------------------------------------
+* V2.0(2019-01-03):
+* 1.Remove:ImageBuff[EPD_2IN13_HEIGHT * EPD_2IN13_WIDTH / 8]
+* 2.Change:EPD_Display(UBYTE *Image)
+*   Need to pass parameters: pointer to cached data
+* 3.Change:
+*   EPD_RST -> EPD_RST_PIN
+*   EPD_DC -> EPD_DC_PIN
+*   EPD_CS -> EPD_CS_PIN
+*   EPD_BUSY -> EPD_BUSY_PIN
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documnetation files (the "Software"), to deal
@@ -26,24 +47,22 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #
-
 ******************************************************************************/
+#ifndef _EPD2IN13_H
+#define _EPD2IN13_H
 
-#ifndef _IMAGEDATA_H_
-#define _IMAGEDATA_H_
+#include "DEV_Config.h"
 
+// Display resolution
+#define EPD_2IN13_WIDTH       122
+#define EPD_2IN13_HEIGHT      250
 
-extern const unsigned char gImage_mono[];
+#define EPD_2IN13_FULL			0
+#define EPD_2IN13_PART			1
 
-extern const unsigned char gImage_2in13[];
-extern const unsigned char gImage_2in13b_b[];
-extern const unsigned char gImage_2in13b_r[];
-extern const unsigned char gImage_2in13c_b[];
-extern const unsigned char gImage_2in13c_y[];
-extern const unsigned char gImage_2in13d[];
-
+void EPD_2IN13_Init(UBYTE Mode);
+void EPD_2IN13_Clear(void);
+void EPD_2IN13_Display(UBYTE *Image);
+void EPD_2IN13_Sleep(void);
 
 #endif
-/* FILE END */
-
-

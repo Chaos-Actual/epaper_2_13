@@ -61,7 +61,26 @@ int EPD_2in13bc_test(void)
     Paint_SelectImage(BlackImage);
     Paint_Clear(WHITE);
     Paint_SelectImage(RYImage);
-    Paint_Clear(WHITE); 
+    Paint_Clear(WHITE);
+
+#if 1   // show bmp
+    printf("show window BMP-----------------\r\n");
+    Paint_SelectImage(BlackImage);
+    GUI_ReadBmp("./pic/100x100.bmp", 10, 0);
+    Paint_SelectImage(RYImage);
+    Paint_Clear(WHITE);    
+    EPD_2IN13BC_Display(BlackImage, RYImage);
+    DEV_Delay_ms(2000);
+
+    printf("show red bmp------------------------\r\n");
+    Paint_SelectImage(BlackImage);
+    GUI_ReadBmp("./pic/2in13bc-b.bmp", 0, 0);
+    Paint_SelectImage(RYImage);
+    GUI_ReadBmp("./pic/2in13bc-ry.bmp", 0, 0);
+    EPD_2IN13BC_Display(BlackImage, RYImage);
+    // DEV_Delay_ms(2000);
+
+#endif    
     
 #if 1   // show image for array    
     printf("show image for array\r\n");
@@ -112,7 +131,7 @@ int EPD_2in13bc_test(void)
     free(RYImage);
     BlackImage = NULL;
     RYImage = NULL;
-    DEV_Delay_ms(2000);//important, at least 2s
+
     // close 5V
     printf("close 5V, Module enters 0 power consumption ...\r\n");
     DEV_Module_Exit();

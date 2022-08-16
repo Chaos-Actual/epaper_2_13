@@ -48,9 +48,35 @@
 #ifndef _DEV_CONFIG_H_
 #define _DEV_CONFIG_H_
 
-#include "pico/stdlib.h"
-#include "hardware/spi.h"
-#include "stdio.h"
+#include <stdint.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <errno.h>
+#include <stdio.h>
+#include <string.h>
+#include "Debug.h"
+
+#ifdef RPI
+    #ifdef USE_BCM2835_LIB
+        #include <bcm2835.h>
+    #elif USE_WIRINGPI_LIB
+        #include <wiringPi.h>
+        #include <wiringPiSPI.h>
+    #elif USE_DEV_LIB
+        #include "RPI_sysfs_gpio.h"
+        #include "dev_hardware_SPI.h"
+    #endif
+#endif
+
+#ifdef JETSON
+    #ifdef USE_DEV_LIB
+        #include "sysfs_gpio.h"    
+        #include "sysfs_software_spi.h"
+    #elif USE_HARDWARE_LIB
+        
+    #endif
+
+#endif
 
 /**
  * data
@@ -66,8 +92,6 @@ extern int EPD_RST_PIN;
 extern int EPD_DC_PIN;
 extern int EPD_CS_PIN;
 extern int EPD_BUSY_PIN;
-extern int EPD_CLK_PIN;
-extern int EPD_MOSI_PIN;
 
 /*------------------------------------------------------------------------------------------------------*/
 void DEV_Digital_Write(UWORD Pin, UBYTE Value);
